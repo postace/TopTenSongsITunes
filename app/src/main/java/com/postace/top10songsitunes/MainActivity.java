@@ -80,6 +80,8 @@ public class MainActivity extends AppCompatActivity {
                 return tempBuffer.toString();
             } catch (IOException e) {
                 Log.d("DownloadData","IO Exception reading data: " + e.getMessage());
+            } catch (SecurityException se) {
+                Log.d("DownloadData","Need permission " + se.getMessage());
             }
 
             return null;
