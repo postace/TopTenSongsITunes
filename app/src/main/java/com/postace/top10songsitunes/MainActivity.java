@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -18,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String URL_APPLE_RSS_FEEDS = "http://ax.itunes.apple.com/" +
             "WebObjects/MZStoreServices.woa/ws/RSS/topsongs/limit=10/xml";
+    private String mFileContents;
     private Button btnParse;
     private ListView xmlListView;
 
@@ -31,6 +33,15 @@ public class MainActivity extends AppCompatActivity {
 
         DownloadData downloadData = new DownloadData();
         downloadData.execute(URL_APPLE_RSS_FEEDS);
+
+        btnParse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO: Add parse activation code
+                ParseSongs parseSongs = new ParseSongs(mFileContents);
+                parseSongs.process();
+            }
+        });
     }
 
     /**
@@ -38,8 +49,6 @@ public class MainActivity extends AppCompatActivity {
      * return : XML string represent list 10 songs
      */
     private class DownloadData extends AsyncTask<String, Void, String> {
-
-        private String mFileContents;
 
         @Override
         protected String doInBackground(String... params) {
