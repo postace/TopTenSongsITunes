@@ -7,6 +7,12 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.ListView;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -40,6 +46,34 @@ public class MainActivity extends AppCompatActivity {
             }
 
             return mFileContents;
+        }
+
+        // Download xml file from given URL, return xml string
+        private String downloadXMLFile(String urlPath) {
+            StringBuilder tempBuffer = new StringBuilder();
+            try {
+                URL url = new URL(urlPath);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                int response = connection.getResponseCode();
+                Log.d("DownloadData","Response code was: " + response);
+                InputStream is = connection.getInputStream();
+                InputStreamReader isr = new InputStreamReader(is);
+
+                int charRead;
+                char[] inputBuffer = new char[500];
+                while (true) {
+                    charRead = isr.read(inputBuffer);
+                    if (charRead <= 0)                  // Ending of stream line
+                        break;
+                    tempBuffer.append(String.copyValueOf(inputBuffer, 0, charRead));
+                }
+
+                return tempBuffer.toString();
+            } catch (IOException e) {
+                Log.d("DownloadData","IO Exception reading data: " + e.getMessage());
+            }
+
+            return null;
         }
 
     }
