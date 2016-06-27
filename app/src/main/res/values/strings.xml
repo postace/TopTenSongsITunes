@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Top 10 songs ITunes</string>
+    <string name="button_description">Top 10 songs</string>
 </resources>
