@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Class DownloadData
-     * @return: XML string represent list 10 songs
+     * return : XML string represent list 10 songs
      */
     private class DownloadData extends AsyncTask<String, Void, String> {
 
