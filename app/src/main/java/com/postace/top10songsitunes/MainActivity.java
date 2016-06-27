@@ -28,6 +28,9 @@ public class MainActivity extends AppCompatActivity {
 
         btnParse = (Button) findViewById(R.id.btnParse);
         xmlListView = (ListView) findViewById(R.id.xmlListView);
+
+        DownloadData downloadData = new DownloadData();
+        downloadData.execute(URL_APPLE_RSS_FEEDS);
     }
 
     /**
@@ -46,6 +49,12 @@ public class MainActivity extends AppCompatActivity {
             }
 
             return mFileContents;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            Log.d("DownloadData", "Result: " + result);
         }
 
         // Download xml file from given URL, return xml string
